@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "kiet@gmail.com",
+      "full_name": "kiet ng",
+      "password_hash": "58f9255940b52c33c9bae6fc71634067815f5b7f8002a14a72d4a57c6e0c0482abc9dd8fd64bc2709d61e610b6ec4ddac7aef0982f52839f5255e0e5a7fddc79",
+      "password_salt": "c5982f089d675677b7af5d363c691a29",
+      "created_at": 1779201829320
+    }
+  ],
+  "sessions": [
+    {
+      "user_id": 1,
+      "access_token": "717a3888780e678ac0d291ea705a974a369ba3ba5d21d1c53e7b48baf5a66bf5",
+      "refresh_token": "ad9785e05b23a857b6bbb09479454f53cadc2175b7052710dbcca702130f9f3e",
+      "access_expires_at": 1779205429320,
+      "refresh_expires_at": 1781793829320,
+      "created_at": 1779201829320
+    },
+    {
+      "user_id": 1,
+      "access_token": "0b46ae2f4a04509dc810ce2e308518ec2a7ef8866a55a42b142d80c9d6415fcb",
+      "refresh_token": "4e9ed29b9fc96f0a5f6dd532ab89e404b9d3398c6a059fecf9f2e754aac22c21",
+      "access_expires_at": 1779205439392,
+      "refresh_expires_at": 1781793839392,
+      "created_at": 1779201839392
+    },
+    {
+      "user_id": 1,
+      "access_token": "28b90fbdf2362852bc137788a5178a1806ef23d0878c6c939bc618be7f55b34e",
+      "refresh_token": "884a8e3174f8bd59dd3ce782ccbb0b34e5799eb93df323b4172f4209c3cf5017",
+      "access_expires_at": 1779205635505,
+      "refresh_expires_at": 1781794035505,
+      "created_at": 1779202035505
+    }
+  ]
+}
