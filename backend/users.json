@@ -33,6 +33,14 @@
       "access_expires_at": 1779205635505,
       "refresh_expires_at": 1781794035505,
       "created_at": 1779202035505
+    },
+    {
+      "user_id": 1,
+      "access_token": "a47747b9c76e7d783741ae712bfe02e1f33714e54453cf2308cc42e0c6a16ebb",
+      "refresh_token": "df48f830fad5d9fcc2f761b2f6ee1df73e5dfba99dad815569175b1e3b0c0534",
+      "access_expires_at": 1779284513831,
+      "refresh_expires_at": 1781872913831,
+      "created_at": 1779280913831
     }
   ]
 }
