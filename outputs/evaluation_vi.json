@@ -8,10 +8,5 @@
     "rouge1": 0.5479,
     "rouge2": 0.2154,
     "rougeL": 0.3153
-  },
-  "Seq2Seq + PG (abstractive)": {
-    "rouge1": 0.0,
-    "rouge2": 0.0,
-    "rougeL": 0.0
   }
 }

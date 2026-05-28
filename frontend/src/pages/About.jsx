@@ -8,7 +8,7 @@ function About() {
           frontend React/Vite hiển thị kết quả ngay lập tức.
         </p>
         <ul>
-          <li>Model: TextRank, BiLSTM Extractive, Seq2Seq Abstractive</li>
+          <li>Model: TextRank (graph-based), BiLSTM Extractive (deep learning)</li>
           <li>Ngôn ngữ: Tiếng Việt và Tiếng Anh</li>
           <li>Local deployment: React + Express + Python</li>
         </ul>

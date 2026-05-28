@@ -117,7 +117,6 @@ export default function SavedSummaries() {
                 <option value="">All Algorithms</option>
                 <option value="textrank">TextRank</option>
                 <option value="bilstm">BiLSTM</option>
-                <option value="seq2seq">Seq2Seq</option>
               </select>
             </div>
 

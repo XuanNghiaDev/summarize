@@ -1,4 +1,4 @@
-function ControlPanel({ lang, model, mode, length, setLang, setModel, setMode, setLength }) {
+function ControlPanel({ lang, model, length, setLang, setModel, setLength }) {
   return (
     <section className="glass-card rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)] dark:border-slate-700/70 dark:bg-slate-950/80">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -7,7 +7,7 @@ function ControlPanel({ lang, model, mode, length, setLang, setModel, setMode, s
           <h3 className="mt-3 text-3xl font-semibold text-slate-950 dark:text-white">Model & summary settings</h3>
         </div>
         <div className="rounded-3xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 dark:bg-slate-900 dark:text-slate-200">
-          Live preview enabled
+          Extractive summarization
         </div>
       </div>
 
@@ -31,35 +31,15 @@ function ControlPanel({ lang, model, mode, length, setLang, setModel, setMode, s
           >
             <option value="textrank">TextRank</option>
             <option value="bilstm">BiLSTM</option>
-            <option value="seq2seq">Seq2Seq</option>
-            <option value="transformer">Transformer</option>
           </select>
         </div>
 
         <div className="grid gap-4">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Mode</label>
-          <div className="grid gap-3 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/70">
-            <button
-              type="button"
-              onClick={() => setMode('extractive')}
-              className={`rounded-3xl px-4 py-3 text-sm font-semibold transition ${mode === 'extractive' ? 'bg-slate-950 text-white dark:bg-cyan-400 dark:text-slate-950' : 'bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200'}`}
-            >
-              Extractive
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode('abstractive')}
-              className={`rounded-3xl px-4 py-3 text-sm font-semibold transition ${mode === 'abstractive' ? 'bg-slate-950 text-white dark:bg-cyan-400 dark:text-slate-950' : 'bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200'}`}
-            >
-              Abstractive
-            </button>
-          </div>
-
           <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Summary length</label>
           <input
             type="range"
             min="10"
-            max="120"
+            max="100"
             step="5"
             value={length}
             onChange={(event) => setLength(Number(event.target.value))}

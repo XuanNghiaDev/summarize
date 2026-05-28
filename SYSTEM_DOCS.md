@@ -6,7 +6,7 @@ A production-ready full-stack application for AI-powered article summarization a
 
 ### Core Features
 - ✅ **User Authentication** - Secure JWT-based auth with refresh tokens
-- ✅ **Article Summarization** - Multiple algorithms (TextRank, BiLSTM, Seq2Seq)
+- ✅ **Article Summarization** - Extractive algorithms (TextRank, BiLSTM)
 - ✅ **AI Quiz Generation** - Automatic multiple-choice quiz creation from summaries
 - ✅ **Quiz History** - Track all quiz attempts with detailed statistics
 - ✅ **Learning Analytics** - Comprehensive dashboard with performance metrics

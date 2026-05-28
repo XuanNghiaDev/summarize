@@ -1,8 +1,8 @@
 # Hệ thống Tóm tắt Văn bản (Text Summarization)
 
-Xây dựng từ đầu, hỗ trợ **Tiếng Việt & Tiếng Anh**, gồm 2 phương pháp:
-- **Extractive**: TextRank (baseline) + BiLSTM + Attention
-- **Abstractive**: Seq2Seq LSTM + Pointer-Generator Network
+Xây dựng từ đầu, hỗ trợ **Tiếng Việt & Tiếng Anh**, gồm 2 phương pháp **extractive**:
+- **TextRank** (baseline, graph-based, không cần train)
+- **BiLSTM + Attention** (deep learning có giám sát)
 
 Phiên bản mới bao gồm bộ ba service: **React + Vite** frontend, **Express** backend và **Flask** Python AI core.
 
@@ -19,9 +19,7 @@ summarization/
 │   └── processed_en.json
 ├── models/                      # Model đã train
 │   ├── bilstm_vi.pt
-│   ├── bilstm_en.pt
-│   ├── seq2seq_vi.pt
-│   └── seq2seq_en.pt
+│   └── bilstm_en.pt
 ├── outputs/                     # Kết quả đánh giá
 │   ├── evaluation_vi.json
 │   └── evaluation_en.json
@@ -29,7 +27,6 @@ summarization/
 ├── preprocessing.py             # Tiền xử lý văn bản
 ├── textrank.py                  # TextRank (không cần train)
 ├── bilstm_extractive.py         # BiLSTM Extractive
-├── seq2seq_abstractive.py       # Seq2Seq + Pointer-Generator
 ├── evaluate.py                  # Đánh giá ROUGE
 └── run_pipeline.py              # Chạy toàn bộ pipeline
 ```
@@ -84,6 +81,15 @@ http://localhost:5173
 
 > Giao diện hiện đã hỗ trợ upload file PDF / DOCX / TXT để tự động trích xuất văn bản và tóm tắt.
 
+### Train BiLSTM (bắt buộc trước khi chọn model BiLSTM trên web)
+
+> TextRank chạy ngay không cần file `.pt`. BiLSTM cần train một lần.
+
+```bash
+python train_bilstm.py        # train cả vi + en → models/bilstm_vi.pt, bilstm_en.pt
+python train_bilstm.py vi     # chỉ tiếng Việt
+```
+
 ### Chạy toàn bộ pipeline (khuyến nghị)
 ```bash
 cd summarization/
@@ -108,11 +114,7 @@ python textrank.py data/processed_vi.json
 python bilstm_extractive.py train vi
 python bilstm_extractive.py predict vi
 
-# 5. Train + demo Seq2Seq
-python seq2seq_abstractive.py train vi
-python seq2seq_abstractive.py predict vi
-
-# 6. Đánh giá tất cả
+# 5. Đánh giá TextRank + BiLSTM
 python evaluate.py vi
 ```
 
@@ -122,12 +124,8 @@ python evaluate.py vi
 
 | Model | ROUGE-1 | ROUGE-2 | ROUGE-L |
 |---|---|---|---|
-| TextRank (baseline) | ~0.35–0.42 | ~0.15–0.20 | ~0.30–0.38 |
-| BiLSTM Extractive | ~0.42–0.50 | ~0.20–0.28 | ~0.38–0.45 |
-| Seq2Seq + PG | ~0.25–0.35 | ~0.08–0.15 | ~0.22–0.32 |
-
-> Seq2Seq ROUGE thường thấp hơn extractive vì sinh câu mới — ROUGE đo overlap từ,
-> không phản ánh đúng chất lượng ngữ nghĩa. Cần BERTScore để đánh giá chính xác hơn.
+| TextRank (baseline) | ~0.35–0.52 | ~0.15–0.23 | ~0.30–0.38 |
+| BiLSTM Extractive | ~0.42–0.55 | ~0.20–0.28 | ~0.31–0.45 |
 
 ---
 
@@ -154,20 +152,18 @@ def crawl_vnexpress(url):
 
 - **Tiếng Việt tốt hơn**: dùng `underthesea` để tokenize đúng từ ghép
 - **Embedding tốt hơn**: train Word2Vec/FastText trên corpus lớn
-- **Abstractive mạnh hơn**: fine-tune mBERT / PhoBERT + VinAI/BARTpho
-- **Demo UI**: `streamlit run app.py`
+- **Demo UI**: mở rộng analytics trên frontend
 
 ---
 
 ## Kiến trúc model
 
+### TextRank
+```
+Câu → TF-IDF → Cosine similarity graph → PageRank → Top-k câu
+```
+
 ### BiLSTM Extractive
 ```
 Câu → TF-IDF vector → BiLSTM (2 lớp) → Attention → Score [0,1] → Top-k câu
-```
-
-### Seq2Seq + Pointer-Generator
-```
-Từ → Embedding → Encoder BiLSTM → Decoder LSTM + Bahdanau Attention
-                                 → p_gen gate → vocab dist + copy dist → từ
 ```

@@ -95,7 +95,11 @@ def preprocess_file(input_path: str, output_path: str):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(processed, f, ensure_ascii=False, indent=2)
 
-    print(f"[OK] {output_path}: {len(processed)} bài (bỏ {skipped} bài quá ngắn)")
+    msg = f"[OK] {output_path}: {len(processed)} bai (bo {skipped} bai qua ngan)"
+    try:
+        print(msg)
+    except UnicodeEncodeError:
+        print(msg.encode("ascii", errors="replace").decode("ascii"))
     return processed
 
 if __name__ == "__main__":

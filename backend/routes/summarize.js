@@ -8,7 +8,7 @@ const pythonBridge = require('../services/pythonBridge');
 // const path = require('path');
 
 const upload = multer({ storage: multer.memoryStorage() });
-const MODEL_OPTIONS = ['textrank', 'bilstm', 'seq2seq'];
+const MODEL_OPTIONS = ['textrank', 'bilstm'];
 const LANG_OPTIONS = ['vi', 'en'];
 
 const ALLOWED_MIMES = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
@@ -53,7 +53,7 @@ router.post('/summarize', async (req, res) => {
     }
 
     if (!MODEL_OPTIONS.includes(model)) {
-      return res.status(400).json({ error: `Model must be one of: ${MODEL_OPTIONS.join(', ')}` });
+      return res.status(400).json({ error: 'Unsupported model' });
     }
 
     if (!LANG_OPTIONS.includes(lang)) {
@@ -65,8 +65,14 @@ router.post('/summarize', async (req, res) => {
   } catch (error) {
     console.error('[Backend] Summarize error:', error?.message || error);
     const message = error?.message || 'Failed to summarize text. Please check Python service.';
-    const status = message.includes('Could not reach Python service') ? 502 : 500;
-    res.status(status).json({ error: message });
+    const status = message.includes('Could not reach Python service')
+      ? 502
+      : message.includes('Unsupported model') || message.includes('must be')
+        ? 400
+        : message.includes('not found')
+          ? 503
+          : 500;
+    res.status(status).json({ success: false, error: message });
   }
 });
 
@@ -88,7 +94,7 @@ router.post('/upload', upload.single('document'), async (req, res) => {
     }
 
     if (!MODEL_OPTIONS.includes(model)) {
-      return res.status(400).json({ error: `Model must be one of: ${MODEL_OPTIONS.join(', ')}` });
+      return res.status(400).json({ error: 'Unsupported model' });
     }
 
     if (!LANG_OPTIONS.includes(lang)) {

@@ -13,7 +13,6 @@ function ModelSelector({ model, onModelChange, lang, onLangChange }) {
         <select id="model-select" value={model} onChange={(event) => onModelChange(event.target.value)}>
           <option value="textrank">TextRank</option>
           <option value="bilstm">BiLSTM Extractive</option>
-          <option value="seq2seq">Seq2Seq Abstractive</option>
         </select>
       </div>
     </div>

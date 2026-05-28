@@ -70,7 +70,7 @@ class Summary(Base):
     source_url = Column(String(500), nullable=True)
     source_type = Column(String(50), default="text")  # text, url, file
     language = Column(String(10), default="vi")
-    algorithm_used = Column(String(50), default="bilstm")  # textrank, bilstm, seq2seq
+    algorithm_used = Column(String(50), default="bilstm")  # textrank, bilstm
     is_favorite = Column(Boolean, default=False)
     word_count_original = Column(Integer, nullable=True)
     word_count_summary = Column(Integer, nullable=True)

@@ -10,7 +10,6 @@ import { uploadDocument } from '../services/aiService';
 const MODEL_OPTIONS = [
   { value: 'textrank', label: 'TextRank' },
   { value: 'bilstm', label: 'BiLSTM' },
-  { value: 'seq2seq', label: 'Seq2Seq' },
 ];
 
 const LANG_OPTIONS = [
@@ -73,7 +72,11 @@ function Home() {
 
       handleToast('Summary generated successfully.', 'success');
     } catch (error) {
-      const message = error?.response?.data?.error || error.message || 'Unable to summarize text.';
+      const message =
+        error?.response?.data?.error ||
+        error?.response?.data?.message ||
+        error.message ||
+        'Unable to summarize text.';
       handleToast(message, 'error');
     } finally {
       setLoading(false);
